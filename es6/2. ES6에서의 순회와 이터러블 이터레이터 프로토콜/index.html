@@ -1,0 +1,87 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script>const log = console.log</script>
+
+# 기존과 달라진 ES6에서의 리스트 순회
+
+<script>
+    // ES5 이전 버젼
+    const list = [1, 2, 3];
+    for (var i = 0; i < list.length; i++) {
+        //log(list[i]);
+    }
+
+    const str = "abc";
+    for (var i = 0; i < str.length; i++) {
+        //log(str[i]);
+    }
+
+
+    // ES6
+    for (const a of list) {
+       //log(a);
+    }
+
+    for (const a of str) {
+        //log(a);
+    }
+</script>
+
+# Array을 통해 알아보기
+
+<script>
+    log("Arr -----------");
+    const arr = [1, 2, 3];
+    //arr[Symbol.iterator] = null;
+    for (const a of arr) {
+        log(a);
+    }
+</script>
+
+# Set을 통해 알아보기
+
+<script>
+    log("Set -----------");
+    const set = new Set([1, 2, 3]);
+    for (const a of set) {
+        log(a);
+    }
+</script>
+
+# Map을 통해 알아보기
+
+<script>
+    log("Map -----------");
+    const map = new Map([["a", 1], ["b", 2], ["c", 3]]);
+    for (const a of map) {
+        log(a);
+    }
+</script>
+
+## 이터러블/이터레이터 프로토콜
+- 이터러블: 이터레이터를 리턴하는 [Symbol.iterator]() 를 가진 값
+- 이터레이터: { value, done } 객체를 리턴하는 next() 를 가진 값
+- 이터러블/이터레이터 프로토콜: 이터러블을 for...of, 전개 연산자 등과 함께 동작하도록한 규약
+
+<script>
+    const arrIter = [1, 2, 3];
+    let iter1 = arrIter[Symbol.iterator]();
+    iter1.next();
+    for (const a of iter1) {
+        log(a);
+    }
+</script>
+
+<script>
+    const mapIter = new Map([['a', 1], ['b', 2], ['c', 3]]);
+    for (const a of mapIter.keys()) {
+        log(a);
+    }
+    for (const a of mapIter.values()){
+        log(a);
+    }
+    for (const a of mapIter.entries()) {
+        log(a);
+    }
+    //console.clear();
+</script>
+
