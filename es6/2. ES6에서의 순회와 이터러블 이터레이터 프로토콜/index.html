@@ -1,5 +1,4 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script>const log = console.log</script>
 
 # 기존과 달라진 ES6에서의 리스트 순회
 
@@ -7,53 +6,53 @@
     // ES5 이전 버젼
     const list = [1, 2, 3];
     for (var i = 0; i < list.length; i++) {
-        //log(list[i]);
+        //console.log(list[i]);
     }
 
     const str = "abc";
     for (var i = 0; i < str.length; i++) {
-        //log(str[i]);
+        //console.log(str[i]);
     }
 
 
     // ES6
     for (const a of list) {
-       //log(a);
+       //console.log(a);
     }
 
     for (const a of str) {
-        //log(a);
+        //console.log(a);
     }
 </script>
 
 # Array을 통해 알아보기
 
 <script>
-    log("Arr -----------");
+    // console.log("Arr -----------");
     const arr = [1, 2, 3];
     //arr[Symbol.iterator] = null;
     for (const a of arr) {
-        log(a);
+        // console.log(a);
     }
 </script>
 
 # Set을 통해 알아보기
 
 <script>
-    log("Set -----------");
+    // console.log("Set -----------");
     const set = new Set([1, 2, 3]);
     for (const a of set) {
-        log(a);
+        // console.log(a);
     }
 </script>
 
 # Map을 통해 알아보기
 
 <script>
-    log("Map -----------");
+    // console.log("Map -----------");
     const map = new Map([["a", 1], ["b", 2], ["c", 3]]);
     for (const a of map) {
-        log(a);
+        // console.log(a);
     }
 </script>
 
@@ -67,21 +66,60 @@
     let iter1 = arrIter[Symbol.iterator]();
     iter1.next();
     for (const a of iter1) {
-        log(a);
+       // console.log(a);
     }
 </script>
 
 <script>
     const mapIter = new Map([['a', 1], ['b', 2], ['c', 3]]);
     for (const a of mapIter.keys()) {
-        log(a);
+        // console.log(a);
     }
     for (const a of mapIter.values()){
-        log(a);
+        // console.log(a);
     }
     for (const a of mapIter.entries()) {
-        log(a);
+        // console.log(a);
     }
-    //console.clear();
+    // console.clear();
 </script>
 
+## 사용자 정의 이터러블을 통해 알아보기
+
+<script>
+    const iterable = {
+        [Symbol.iterator]() {
+            let i = 3;
+            return {
+                next() {
+                    return i == 0 ? {done: true} : {value: --i, done: false};
+                },
+                [Symbol.iterator]() {
+                    return this;
+                }
+            }
+        }
+    };
+    let iterator = iterable[Symbol.iterator]();
+    // console.log(iterator.next());
+    // console.log(iterator.next());
+    // console.log(iterator.next());
+    // console.log(iterator.next());
+    iterator.next();
+    iterator.next();
+    for (const a of iterator) {
+        console.log(a);
+    }
+
+    for(const a of iterable) {
+        // console.log(a);
+    }
+</script>
+
+## 전개 연산자
+
+<script>
+    console.clear();
+    const a = [1, 2];
+    console.log([...a, ...arr, ...set, ...map.keys()]);
+</script>
