@@ -4,11 +4,11 @@
 
 <script>
     const products = [
-        {name: "반팔티", price: 15000}
-        , {name: "반팔티", price: 20000}
-        , {name: "핸드폰케이스", price: 15000}
-        , {name: "후드티", price: 30000}
-        , {name: "바지", price: 25000}
+        {name: "반팔티", price: 15000},
+        {name: "반팔티", price: 20000},
+        {name: "핸드폰케이스", price: 15000},
+        {name: "후드티", price: 30000},
+        {name: "바지", price: 25000}
     ];
 
     let names = [];
@@ -47,5 +47,123 @@
 <script>
     console.clear();
 
+    console.log([1, 2, 3].map(a => a + 1));
+
+    console.log(document.querySelectorAll("*"));
+
+    console.log(map(el => el.nodeName, document.querySelectorAll("*")));
+
+    const it = document.querySelectorAll("*")[Symbol.iterator]();
+    console.log(it.next());
+    console.log(it.next());
+    console.log(it.next());
+    console.log(it.next());
+    console.log(it.next());
+
+    console.clear();
+
+    function* gen() {
+        yield 2;
+        if (false) yield 3;
+        yield 4;
+    }
+
+    console.log(map(a => a * a, gen()));
+
+    let m = new Map();
+    m.set("a", 10);
+    m.set("b", 20);
+
+    console.log(new Map(map(([k, a]) => [k, a * 2], m)));
+</script>
+
+# filter
+
+<script>
+    console.clear();
+
+    const filterProducts = [
+        {name: "반팔티", price: 15000},
+        {name: "반팔티", price: 20000},
+        {name: "핸드폰케이스", price: 15000},
+        {name: "후드티", price: 30000},
+        {name: "바지", price: 25000}
+    ];
+
+    // let under20000 = [];
+    // for (const p of filterProducts) {
+    //     if (p.price < 20000) {
+    //         under20000.push(p);
+    //     }
+    // }
+    //
+    // // 정규연산자 사용
+    // console.log(...under20000);
+
+    const filter = (f, iter) => {
+        let res = [];
+        for (const a of iter) {
+            if (f(a)) {
+                res.push(a);
+            }
+        }
+
+        return res;
+    };
+
+    console.log(...filter(p => p.price < 20000, filterProducts));
+
+    console.log(filter(n => n % 2, [1, 2, 3, 4]));
+
+    console.log(filter(n => n % 2, function* () {
+        yield 1;
+        yield 2;
+        yield 3;
+    }()));
+
+</script>
+
+# reduce
+
+<script>
+    console.clear();
+
+    const nums = [1, 2, 3, 4, 5];
+    let total = 0;
+
+    for (const n of nums) {
+        total = total + n;
+    }
+
+    console.log(total);
+
+    const reduce = (f, acc, iter) => {
+        if (!iter) {
+            iter = acc[Symbol.iterator]();
+            acc = iter.next().value;
+        }
+
+        for (const a of iter) {
+            acc = f(acc, a);
+        }
+
+        return acc;
+    };
+
+    const add = (a, b) => a + b;
+    // console.log(reduce(add, 0 , [1, 2, 3, 4, 5]));
+    // console.log(add(add(add(add(add(0, 1), 2), 3), 4), 5));
+
+    console.log(reduce(add, [1, 2, 3, 4, 5]));
+
+    const reduceProducts = [
+        {name: "반팔티", price: 15000},
+        {name: "반팔티", price: 20000},
+        {name: "핸드폰케이스", price: 15000},
+        {name: "후드티", price: 30000},
+        {name: "바지", price: 25000}
+    ];
+
+    console.log(reduce((totalPrice, product) => totalPrice + product.price, 0 , reduceProducts));
 
 </script>
